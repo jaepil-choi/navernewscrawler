@@ -68,7 +68,7 @@ def naver_news_search_url(query, start_idx, start_date, end_date=None, sort_key=
 
 def crawling(url_link):
   url=url_link
-  r=session.get(url, headers=utils.headers)
+  r=session.get(url, headers=utils.HEADERS)
   b=bs(r.content,'html.parser')
   
   news_head = b.find('h2', {'class': 'media_end_head_headline'}) # 기사 제목만 가져옴. 
