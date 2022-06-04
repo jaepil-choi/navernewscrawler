@@ -15,7 +15,7 @@ from tqdm import tqdm
 
 ## Import custom libs
 
-import utils
+from navernewscrawler import utils
 
 ## Session setting with retry strategy
 
