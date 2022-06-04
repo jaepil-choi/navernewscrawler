@@ -1,6 +1,4 @@
 ## Import libs
-
-from matplotlib.pyplot import title
 import pandas as pd
 
 import requests
@@ -17,7 +15,7 @@ from tqdm import tqdm
 
 ## Import custom libs
 
-from navernewscrawler import utils
+import utils
 
 ## Session setting with retry strategy
 
