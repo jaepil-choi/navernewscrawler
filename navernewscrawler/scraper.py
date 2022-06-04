@@ -38,7 +38,7 @@ session.mount("https://", adapter)
 
 ## naver news query url creator
 
-def naver_news_search_url(query, start_idx, start_date, end_date=None, sort_key='recent_asc'):
+def naver_news_search_url(query, start_idx, start_date, end_date=None, sort_key='recent_asc') -> str:
     sort_key = sort_key.lower()
     assert sort_key in ['recent_asc', 'relevance']
     sort_d = {
@@ -65,7 +65,7 @@ def naver_news_search_url(query, start_idx, start_date, end_date=None, sort_key=
 ## naver news page link collector
 
 # TODO: 언론사 어디인지 여기에서 가져올 것. 
-def get_news_list(news_page_url):
+def get_news_list(news_page_url) -> list:
     r = session.get(news_page_url, headers=utils.HEADERS)
     b = bs(r.content, 'html.parser')
 
@@ -90,7 +90,7 @@ def get_news_list(news_page_url):
 
 ## naver-format news article info collector
 
-def crawling(article_url):
+def crawling(article_url) -> dict:
   r=session.get(article_url, headers=utils.HEADERS)
   b=bs(r.content,'html.parser')
   
