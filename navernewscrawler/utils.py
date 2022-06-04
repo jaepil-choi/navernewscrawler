@@ -13,7 +13,7 @@ HEADERS = {
             "accept-encoding": "gzip, deflate, br",
             "accept-language": "ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7",
             "cache-control": "max-age=0",
-            "referer": u,
+            # "referer": u,
             "sec-ch-ua": '" Not A;Brand";v="99", "Chromium";v="102", "Google Chrome";v="102"',
             "sec-ch-ua-mobile": "?0",
             "sec-ch-ua-platform": "Windows",
@@ -29,12 +29,12 @@ CWD = Path('.').resolve()
 BASE_DIR = CWD / 'cache' / 'navernews'
 
 ## directory generation 
-def generate_dirs(self, security_code, frequency="month"):
+def generate_dirs(security_code, min_date, max_date, frequency="month"):
 
     # freq_dtype = CacheSaver.frequency2dtype[frequency] # TODO: Dynamically change directory structure based on frequency parameter
-    years = DateUtil.inclusive_daterange(self.min_date, self.max_date, "year")
+    years = DateUtil.inclusive_daterange(min_date, max_date, "year")
     years = [DateUtil.npdate2str(y)['year'] for y in years]
-    months = DateUtil.inclusive_daterange(self.min_date, self.max_date, "month")
+    months = DateUtil.inclusive_daterange(min_date, max_date, "month")
     months = [DateUtil.npdate2str(m)['month'] for m in months]
 
     p = BASE_DIR / security_code
