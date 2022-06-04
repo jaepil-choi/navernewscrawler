@@ -1,5 +1,6 @@
 ## Import libs
 
+from matplotlib.pyplot import title
 import pandas as pd
 
 import requests
@@ -16,7 +17,7 @@ from tqdm import tqdm
 
 ## Import custom libs
 
-import utils
+from navernewscrawler import utils
 
 ## Session setting with retry strategy
 
@@ -37,7 +38,7 @@ adapter = HTTPAdapter(max_retries=retry_strategy)
 session.mount("http://", adapter)
 session.mount("https://", adapter)
 
-## naver news page link collector
+## naver news query url creator
 
 def naver_news_search_url(query, start_idx, start_date, end_date=None, sort_key='recent_asc'):
     sort_key = sort_key.lower()
@@ -61,14 +62,38 @@ def naver_news_search_url(query, start_idx, start_date, end_date=None, sort_key=
 
     url = f'https://m.search.naver.com/search.naver?where=m_news&sm=mtb_pge&query={encoded_query}&sort={sort_d[sort_key]}&photo=0&field=0&pd=3&ds={start_date_dot}&de={end_date_dot}&mynews=0&office_type=0&office_section_code=0&news_office_checked=&nso=so:dd,p:from{start_date}to{end_date}&start={start_idx}'
     
-    # TODO: 언론사 어디인지 여기에서 가져올 것. 
     return url
+
+## naver news page link collector
+
+# TODO: 언론사 어디인지 여기에서 가져올 것. 
+def get_news_list(news_page_url):
+    r = session.get(news_page_url, headers=utils.HEADERS)
+    b = bs(r.content, 'html.parser')
+
+    news_urls = b.find_all('div', {'class': 'news_dsc'}) # 기사 url만 가져옴. 
+    news_urls = [n.find('a').attrs['href'] for n in news_urls] 
+
+    companies = b.find_all('div', {'class': 'info_group'})
+    companies = [c.find('a').get_text() for c in companies]
+
+    titles = b.find_all('div', {'class': 'tit'})
+    titles = [t.get_text() for t in titles]
+
+    result = []
+    for n, c, t in zip(news_urls, companies, titles):
+        result.append({
+            'news_url': n,
+            'company': c,
+            'title': t,
+            })
+    
+    return result
 
 ## naver-format news article info collector
 
-def crawling(url_link):
-  url=url_link
-  r=session.get(url, headers=utils.HEADERS)
+def crawling(article_url):
+  r=session.get(article_url, headers=utils.HEADERS)
   b=bs(r.content,'html.parser')
   
   news_head = b.find('h2', {'class': 'media_end_head_headline'}) # 기사 제목만 가져옴. 
@@ -89,6 +114,13 @@ def crawling(url_link):
   news_date = b.find('span', {'class': 'media_end_head_info_datestamp_time _ARTICLE_DATE_TIME'}) # 기사 날짜만 가져옴.
   date=news_date.get_text()
   
-  result={'headline':headline,'date':date,'writer':writer,'section':section,'link':link,'text':text}
+  result={
+      'headline': headline,
+      'date': date,
+      'writer': writer,
+      'section': section,
+      'link': link,
+      'text': text,
+      }
   
   return result
