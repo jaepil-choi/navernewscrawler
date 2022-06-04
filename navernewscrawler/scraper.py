@@ -1,5 +1,6 @@
 ## Import libs
 import pandas as pd
+import json
 
 import requests
 from requests.adapters import HTTPAdapter
@@ -90,7 +91,7 @@ def get_news_list(news_page_url) -> list:
 
 ## naver-format news article info collector
 
-def crawling(article_url) -> dict:
+def article_crawling(article_url) -> dict:
   r=session.get(article_url, headers=utils.HEADERS)
   b=bs(r.content,'html.parser')
   
@@ -122,3 +123,22 @@ def crawling(article_url) -> dict:
       }
   
   return result
+
+def convert_sid2name(sid):
+    sid = str(sid)
+
+    krx_api = "http://data.krx.co.kr/comm/bldAttendant/getJsonData.cmd"
+    data = {
+        'bld': 'dbms/comm/finder/finder_stkisu',
+        'searchText': sid,
+    }
+    
+    r = requests.post(krx_api, data=data, headers=utils.HEADERS)
+    b = bs(r.content, 'html.parser')
+    b_json = json.loads(b.text)
+
+    content = b_json['block1']
+    if content:
+        return content[0]['codeName']
+    else:
+        raise Exception(f'{sid} code name not found in KRX system')
