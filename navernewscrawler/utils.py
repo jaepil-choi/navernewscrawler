@@ -28,6 +28,9 @@ HEADERS = {
 CWD = Path('.').resolve()
 BASE_DIR = CWD / 'cache' / 'navernews'
 
+def timestamp2formatted(timestamp):
+    return datetime.fromtimestamp(timestamp).strftime("%c")
+
 ## directory generation 
 def generate_dirs(security_code, min_date, max_date, frequency="month"):
     security_code = str(security_code)

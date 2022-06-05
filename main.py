@@ -9,7 +9,7 @@ from datetime import timedelta, datetime
 # import jsonpickle
 
 ## Import custom libs
-from navernewscrawler import worker
+from navernewscrawler import worker, utils
 
 
 
@@ -60,7 +60,7 @@ if __name__ == '__main__':
     num_processes = args.processes
 
     start_time = time.time()
-    print(f'{datetime.fromtimestamp(start_time).strftime("%c")} : Job started')
+    print(f'{utils.timestamp2formatted(start_time)} : Job started')
     if num_processes:
         print(f'Start multiprocessing with {num_processes} processes')
         with mp.Pool(processes=num_processes) as p:
@@ -73,5 +73,5 @@ if __name__ == '__main__':
             result.append(sid)
     end_time = time.time()
 
-    print(f'{datetime.fromtimestamp(end_time).strftime("%c")} : All Jobs finished. It took: {timedelta(seconds=(end_time - start_time))}')
+    print(f'{utils.timestamp2formatted(end_time)} : All Jobs finished. It took: {timedelta(seconds=(end_time - start_time))}')
     
