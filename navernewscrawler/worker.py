@@ -129,10 +129,12 @@ def generate_ii_newsdata(
     
         with open(filepath, 'w', encoding='utf-8') as j:
             json.dump(json_result, j)
+        
+        break ## debug purpose
     
     end_time = time.time()
 
-    print(f'[{utils.timestamp2formatted(end_time)}}] {sid}:{codename} Finished. \
+    print(f'[{utils.timestamp2formatted(end_time)}] {sid}:{codename} Finished. \
 / {len(json_result["data"])} articles \
 / Elapsed: {timedelta(seconds=(end_time - start_time))}')
 
