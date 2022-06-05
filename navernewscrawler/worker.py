@@ -78,9 +78,9 @@ def generate_ii_newsdata(
             
             # get each article's data
             for link_data in news_link_data:
-                article_url = news_link_data['news_url']
-                news_company = news_link_data['company']
-                title = news_link_data['title']
+                article_url = link_data['news_url']
+                news_company = link_data['company']
+                title = link_data['title']
 
                 naver_news_prefix = 'news.naver.com'
                 if naver_news_prefix in article_url:
