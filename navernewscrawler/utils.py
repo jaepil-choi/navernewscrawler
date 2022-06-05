@@ -6,7 +6,7 @@ import numpy as np
 from pathlib import Path
 
 import itertools
-import datetime
+from datetime import datetime
 
 HEADERS = {
             "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
@@ -73,7 +73,7 @@ class DateUtil:
             except:
                 return False
         
-        if isinstance(yyyymmdd, datetime.datetime) or isinstance(yyyymmdd, np.datetime64):
+        if isinstance(yyyymmdd, datetime) or isinstance(yyyymmdd, np.datetime64):
             try:
                 date = pd.to_datetime(yyyymmdd)
                 return (start_date < date < end_date)
