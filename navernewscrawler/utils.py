@@ -30,6 +30,7 @@ BASE_DIR = CWD / 'cache' / 'navernews'
 
 ## directory generation 
 def generate_dirs(security_code, min_date, max_date, frequency="month"):
+    security_code = str(security_code)
 
     # freq_dtype = CacheSaver.frequency2dtype[frequency] # TODO: Dynamically change directory structure based on frequency parameter
     years = DateUtil.inclusive_daterange(min_date, max_date, "year")
@@ -42,12 +43,8 @@ def generate_dirs(security_code, min_date, max_date, frequency="month"):
     for year, month in itertools.product(years, months):
         (p / year / month).mkdir(parents=True, exist_ok=True)
 
-def get_savedir(security_code, date_time):
-    date_time = pd.to_datetime(date_time)
-    year = date_time.year
-    month = date_time.month
 
-    return BASE_DIR / security_code / year / month
+
 
 
 
