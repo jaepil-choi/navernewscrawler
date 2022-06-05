@@ -92,28 +92,46 @@ def get_news_list(news_page_url) -> list:
 ## naver-format news article info collector
 
 def article_crawling(article_url) -> dict:
-  r=session.get(article_url, headers=utils.HEADERS)
-  b=bs(r.content,'html.parser')
-  
-  news_head = b.find('h2', {'class': 'media_end_head_headline'}) # 기사 제목만 가져옴. 
-  headline=news_head.get_text()
+    r=session.get(article_url, headers=utils.HEADERS)
+    b=bs(r.content,'html.parser')
+    
+    try:
+        news_head = b.find('h2', {'class': 'media_end_head_headline'}) # 기사 제목만 가져옴. 
+        headline=news_head.get_text()
+    except:
+        headline = None
 
-  news_text = b.find('div', {'id': 'dic_area'}) # 기사 본문만 가져옴. 
-  text=news_text.get_text()
-  
-  news_section = b.find('em', {'class': 'media_end_categorize_item'}) # 기사 섹션만 가져옴.
-  section=news_section.get_text()
-  
-  news_writer = b.find('em', {'class': 'media_end_head_journalist_name'}) # 기자이름만 가져옴.
-  writer=news_writer.get_text()
-  
-  news_link = b.find('a', {'class': "media_end_head_origin_link"} ).attrs['href'] # 기사 링크만 가져옴.
-  link=news_link
-  
-  news_date = b.find('span', {'class': 'media_end_head_info_datestamp_time _ARTICLE_DATE_TIME'}) # 기사 날짜만 가져옴.
-  date=news_date.get_text()
-  
-  result={
+    try:
+        news_text = b.find('div', {'id': 'dic_area'}) # 기사 본문만 가져옴. 
+        text=news_text.get_text()
+    except:
+        text = None
+    
+    try:
+        news_section = b.find('em', {'class': 'media_end_categorize_item'}) # 기사 섹션만 가져옴.
+        section=news_section.get_text()
+    except:
+        section = None
+    
+    try:
+        news_writer = b.find('em', {'class': 'media_end_head_journalist_name'}) # 기자이름만 가져옴.
+        writer=news_writer.get_text()
+    except:
+        writer = None
+    
+    try:
+        news_link = b.find('a', {'class': "media_end_head_origin_link"} ).attrs['href'] # 기사 링크만 가져옴.
+        link=news_link
+    except:
+        link = None
+    
+    try:
+        news_date = b.find('span', {'class': 'media_end_head_info_datestamp_time _ARTICLE_DATE_TIME'}) # 기사 날짜만 가져옴.
+        date=news_date.get_text()
+    except:
+        date = None
+    
+    result={
       'headline': headline,
       'date': date,
       'writer': writer,
@@ -122,7 +140,7 @@ def article_crawling(article_url) -> dict:
       'text': text,
       }
   
-  return result
+    return result
 
 def convert_sid2name(sid):
     sid = str(sid)
