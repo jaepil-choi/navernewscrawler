@@ -3,6 +3,9 @@ import multiprocessing as mp
 import argparse
 from pathlib import Path
 import pickle
+
+import time
+from datetime import timedelta
 # import jsonpickle
 
 ## Import custom libs
@@ -56,6 +59,8 @@ if __name__ == '__main__':
 
     num_processes = args.processes
 
+    start_time = time.time()
+    print(f'{start_time} : Job started')
     if num_processes:
         print(f'Start multiprocessing with {num_processes} processes')
         with mp.Pool(processes=num_processes) as p:
@@ -66,5 +71,7 @@ if __name__ == '__main__':
         for sid in sid_list:
             wrap_worker(sid)
             result.append(sid)
+    end_time = time.time()
 
+    print(f'{end_time} : Job finished. It took: {timedelta(seconds=(end_time - start_time))}')
     
