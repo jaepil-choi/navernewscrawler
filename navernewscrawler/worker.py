@@ -3,7 +3,7 @@ import json
 from tqdm import tqdm
 
 import time
-from datetime import timedelta
+from datetime import datetime, timedelta
 
 def generate_ii_newsdata(
     sid, 
@@ -132,7 +132,7 @@ def generate_ii_newsdata(
     
     end_time = time.time()
 
-    print(f'[{end_time}] {sid}:{codename} Finished. \
+    print(f'[{datetime.fromtimestamp(end_time).strftime("%c")}] {sid}:{codename} Finished. \
 / {len(json_result["data"])} articles \
 / Elapsed: {timedelta(seconds=(end_time - start_time))}')
 
