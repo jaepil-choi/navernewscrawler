@@ -1,5 +1,6 @@
 from navernewscrawler import scraper, utils
 import json
+from tqdm import tqdm
 
 def generate_ii_newsdata(
     sid, 
@@ -50,9 +51,10 @@ def generate_ii_newsdata(
     utils.generate_dirs(sid, min(di_list), max(di_list))
 
     # iterate by month. 
+    print(f'Start downloading news: {sid}:{codename} from {di_list.min().date()} to {di_list.max().date()} ({len(di_list)} days)')
     for year, month in yearmonth:
         json_result = {'data': []}
-        save_dir = utils.BASE_DIR / sid / str(year) / str(month)
+        save_dir = utils.BASE_DIR / sid / f'{year:04}' / f'{month:02}'
         filepath = save_dir / f'{sid}_{year:04}{month:02}.json'
 
         monthly_di_list = di_groupby_ym[(year, month)]
