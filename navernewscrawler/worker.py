@@ -122,10 +122,10 @@ def generate_ii_newsdata(
 
                 json_result['data'].append(result)
     
-        with open(filepath, 'w') as j:
+        with open(filepath, 'w', encoding='utf-8') as j:
             json.dump(json_result, j)
         
-        return sid
+    return sid
 
 
 
