@@ -2,6 +2,9 @@ from navernewscrawler import scraper, utils
 import json
 from tqdm import tqdm
 
+import time
+from datetime import timedelta
+
 def generate_ii_newsdata(
     sid, 
     kospi_ii2dates, 
@@ -11,6 +14,8 @@ def generate_ii_newsdata(
     reverse=True,
     ): # saves data and return only sid
     
+    start_time = time.time()
+
     ## set market
     market = None
     if (sid in kospi_ii2dates) and (sid in kosdaq_ii2dates):
@@ -124,7 +129,11 @@ def generate_ii_newsdata(
     
         with open(filepath, 'w', encoding='utf-8') as j:
             json.dump(json_result, j)
-        
+    
+    end_time = time.time()
+
+    print(f'[{end_time}] {sid}:{codename} Finished. Elapsed: {timedelta(seconds=(end_time - start_time))}')
+
     return sid
 
 
