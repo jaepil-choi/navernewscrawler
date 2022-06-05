@@ -81,7 +81,7 @@ def generate_ii_newsdata(
                     break
                 else:
                     news_link_data += news_link_list
-                    naver_start_idx += 1
+                    naver_start_idx += 10
             
             # get each article's data
             for link_data in news_link_data:
@@ -129,6 +129,7 @@ def generate_ii_newsdata(
     
         with open(filepath, 'w', encoding='utf-8') as j:
             json.dump(json_result, j)
+            print(f'Dump succedded at {filepath}, length: {json_result["data"]}')
         
         break ## debug purpose
     
