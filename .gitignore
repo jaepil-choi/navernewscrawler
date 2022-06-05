@@ -188,8 +188,8 @@ pip-selfcheck.json
 
 ## Custom ignore
 
-*.pickle
-*.pkl
+# *.pickle
+# *.pkl
 cache/
 
 sandbox.ipynb
