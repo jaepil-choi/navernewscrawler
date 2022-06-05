@@ -12,6 +12,7 @@ def generate_ii_newsdata(
     kospi_ii2codename,
     kosdaq_ii2codename,
     reverse=True,
+    continue_from_leftoff=True,
     ): # saves data and return only sid
     
     start_time = time.time()
@@ -61,6 +62,9 @@ def generate_ii_newsdata(
         json_result = {'data': []}
         save_dir = utils.BASE_DIR / sid / f'{year:04}' / f'{month:02}'
         filepath = save_dir / f'{sid}_{year:04}{month:02}.json'
+
+        if filepath.exists() and continue_from_leftoff:
+            continue
 
         monthly_di_list = di_groupby_ym[(year, month)]
 
