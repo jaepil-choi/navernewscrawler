@@ -132,7 +132,9 @@ def generate_ii_newsdata(
     
     end_time = time.time()
 
-    print(f'[{end_time}] {sid}:{codename} Finished. Elapsed: {timedelta(seconds=(end_time - start_time))}')
+    print(f'[{end_time}] {sid}:{codename} Finished. \
+/ {len(json_result["data"])} articles \
+/ Elapsed: {timedelta(seconds=(end_time - start_time))}')
 
     return sid
 
