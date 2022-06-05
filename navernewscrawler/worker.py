@@ -58,6 +58,7 @@ def generate_ii_newsdata(
 
     # iterate by month. 
     print(f'Start downloading news: {sid}:{codename} from {di_list.min().date()} to {di_list.max().date()} ({len(di_list)} days)')
+    article_count = 0
     for year, month in yearmonth:
         json_result = {'data': []}
         save_dir = utils.BASE_DIR / sid / f'{year:04}' / f'{month:02}'
@@ -130,7 +131,8 @@ def generate_ii_newsdata(
                 }
 
                 json_result['data'].append(result)
-    
+
+        article_count += len(json_result['data'])
         with open(filepath, 'w', encoding='utf-8') as j:
             json.dump(json_result, j)
             # print(f'Dump succedded at {filepath}, length: {json_result["data"]}')
@@ -138,8 +140,8 @@ def generate_ii_newsdata(
     end_time = time.time()
 
     print(f'[{utils.timestamp2formatted(end_time)}] {sid}:{codename} Finished. \
-/ {len(json_result["data"])} articles \
-/ Elapsed: {timedelta(seconds=(end_time - start_time))}')
+/ {article_count} articles \
+/ Elapsed: {timedelta(seconds=(end_time - start_time))}') 
 
     return sid
 
