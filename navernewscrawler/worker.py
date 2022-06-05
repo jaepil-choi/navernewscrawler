@@ -47,10 +47,10 @@ def generate_ii_newsdata(
     naver_start_idx = 1
     
     yearmonth =  [(d.year, d.month) for d in di_list]
-    if reverse:
-        yearmonth = yearmonth[::-1]
-    
     di_groupby_ym = di_list.groupby(yearmonth)
+
+    yearmonth = list(set(yearmonth))
+    yearmonth.sort(reverse=reverse)
     
     # generate directory
     utils.generate_dirs(sid, min(di_list), max(di_list))
@@ -129,9 +129,7 @@ def generate_ii_newsdata(
     
         with open(filepath, 'w', encoding='utf-8') as j:
             json.dump(json_result, j)
-            print(f'Dump succedded at {filepath}, length: {json_result["data"]}')
-        
-        break ## debug purpose
+            # print(f'Dump succedded at {filepath}, length: {json_result["data"]}')
     
     end_time = time.time()
 
