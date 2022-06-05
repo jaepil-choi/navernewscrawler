@@ -43,11 +43,6 @@ def generate_dirs(security_code, min_date, max_date, frequency="month"):
     for year, month in itertools.product(years, months):
         (p / year / month).mkdir(parents=True, exist_ok=True)
 
-
-
-
-
-
 ## Util codebase copied from korquanttools
 class DateUtil:
     @staticmethod

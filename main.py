@@ -73,5 +73,5 @@ if __name__ == '__main__':
             result.append(sid)
     end_time = time.time()
 
-    print(f'{end_time} : Job finished. It took: {timedelta(seconds=(end_time - start_time))}')
+    print(f'{end_time} : All Jobs finished. It took: {timedelta(seconds=(end_time - start_time))}')
     
