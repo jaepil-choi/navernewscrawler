@@ -22,7 +22,11 @@ from navernewscrawler import utils
 
 session = requests.session()
 
-assert_status_hook = lambda response, *args, **kwargs: response.raise_for_status()
+def assert_status_hook_func(response, *args, **kwargs):
+    response.raise_for_status()
+
+assert_status_hook = assert_status_hook_func
+
 session.hooks["response"] = [assert_status_hook]
 
 retry_config = {
