@@ -124,35 +124,35 @@ def article_crawling(article_url) -> dict:
   
   return result
 
-def convert_sid2name(sid, source='k5'):
+def convert_sid2name(sid):
     sid = str(sid)
 
-    if source == 'krx':
-        krx_api = "http://data.krx.co.kr/comm/bldAttendant/getJsonData.cmd"
-        data = {
-            'bld': 'dbms/comm/finder/finder_stkisu',
-            'searchText': sid,
-        }
-        
-        r = session.post(krx_api, data=data, headers=utils.HEADERS)
-        b = bs(r.content, 'html.parser')
-        b_json = json.loads(b.text)
-
-        content = b_json['block1']
-        if content:
-            return content[0]['codeName']
-        else:
-            # print(f'{sid} code name not found in KRX system. None is returned.')
-            return None
+    # if source == 'krx':
+    krx_api = "http://data.krx.co.kr/comm/bldAttendant/getJsonData.cmd"
+    data = {
+        'bld': 'dbms/comm/finder/finder_stkisu',
+        'searchText': sid,
+    }
     
-    elif source == 'k5': # https://k5.co.kr/
-        k5_url = 'https://k5.co.kr/stock/do_typehead_search_stock?q='
-        r = session.get(k5_url + sid, headers=utils.HEADERS)
-        r_json = json.loads(r.text)
+    r = session.post(krx_api, data=data, headers=utils.HEADERS)
+    b = bs(r.content, 'html.parser')
+    b_json = json.loads(b.text)
 
-        content = r_json['data']
-        if content:
-            return content[0]['stock_name']
-        else:
-            # print(f'{sid} code name not found in K5 system. None is returned.')
-            return None
+    content = b_json['block1']
+    if content:
+        return content[0]['codeName']
+    else:
+        # print(f'{sid} code name not found in KRX system. None is returned.')
+        pass
+    
+    # elif source == 'k5': # https://k5.co.kr/
+    k5_url = 'https://k5.co.kr/stock/do_typehead_search_stock?q='
+    r = session.get(k5_url + sid, headers=utils.HEADERS)
+    r_json = json.loads(r.text)
+
+    content = r_json['data']
+    if content:
+        return content[0]['stock_name']
+    else:
+        # print(f'{sid} code name not found in K5 system. None is returned.')
+        return None
