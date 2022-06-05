@@ -30,7 +30,7 @@ assert_status_hook = assert_status_hook_func
 session.hooks["response"] = [assert_status_hook]
 
 retry_config = {
-    "total": 10,
+    "total": 20,
     "status_forcelist": [413, 429, 500, 502, 503, 504, 403],
     "method_whitelist": ["GET", "POST"],
     "backoff_factor": 2,
