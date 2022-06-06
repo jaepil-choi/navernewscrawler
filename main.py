@@ -4,14 +4,13 @@ import argparse
 from pathlib import Path
 import pickle
 
+import logging
 import time
 from datetime import timedelta, datetime
 # import jsonpickle
 
 ## Import custom libs
 from navernewscrawler import worker, utils
-
-
 
 def check_pickle(filename):
     cwd = Path('.').resolve()
@@ -42,14 +41,19 @@ def wrap_worker(
     kospi_ii2codename=kospi_ii2codename,
     kosdaq_ii2codename=kosdaq_ii2codename,
     ):
+    try:
+        return worker.generate_ii_newsdata(
+            sid,
+            kospi_ii2dates,
+            kosdaq_ii2dates,
+            kospi_ii2codename,
+            kosdaq_ii2codename,
+            )
+    except Exception as e:
+        print(repr(e))
+        print(f'** WARNING ** {sid} raised Exception. Skipping this company. Check the log.')
 
-    return worker.generate_ii_newsdata(
-        sid,
-        kospi_ii2dates,
-        kosdaq_ii2dates,
-        kospi_ii2codename,
-        kosdaq_ii2codename,
-        )
+        return None
 
 
 if __name__ == '__main__':
