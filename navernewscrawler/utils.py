@@ -28,6 +28,8 @@ HEADERS = {
 CWD = Path('.').resolve()
 BASE_DIR = CWD / 'cache' / 'navernews'
 
+TIMEOUT = 600
+
 def timestamp2formatted(timestamp):
     return datetime.fromtimestamp(timestamp).strftime("%c")
 

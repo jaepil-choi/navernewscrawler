@@ -71,7 +71,7 @@ def naver_news_search_url(query, start_idx, start_date, end_date=None, sort_key=
 
 # TODO: 언론사 어디인지 여기에서 가져올 것. 
 def get_news_list(news_page_url) -> list:
-    r = session.get(news_page_url, headers=utils.HEADERS)
+    r = session.get(news_page_url, headers=utils.HEADERS, timeout=utils.TIMEOUT)
     b = bs(r.content, 'html.parser')
 
     news_urls = b.find_all('div', {'class': 'news_dsc'}) # 기사 url만 가져옴. 
@@ -156,7 +156,7 @@ def convert_sid2name(sid):
         'searchText': sid,
     }
     
-    r = session.post(krx_api, data=data, headers=utils.HEADERS)
+    r = session.post(krx_api, data=data, headers=utils.HEADERS, timeout=utils.TIMEOUT)
     b = bs(r.content, 'html.parser')
     b_json = json.loads(b.text)
 
