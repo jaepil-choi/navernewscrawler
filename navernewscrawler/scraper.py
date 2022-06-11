@@ -77,11 +77,17 @@ def get_news_list(news_page_url) -> list:
     news_urls = b.find_all('div', {'class': 'news_dsc'}) # 기사 url만 가져옴. 
     news_urls = [n.find('a').attrs['href'] for n in news_urls] 
 
-    companies = b.find_all('div', {'class': 'info_group'})
-    companies = [c.find('a').get_text() for c in companies]
+    try:
+        companies = b.find_all('div', {'class': 'info_group'})
+        companies = [c.find('a').get_text() for c in companies]
+    except:
+        companies = [None for _ in news_urls]
 
-    titles = b.find_all('div', {'class': 'tit'})
-    titles = [t.get_text() for t in titles]
+    try:
+        titles = b.find_all('div', {'class': 'tit'})
+        titles = [t.get_text() for t in titles]
+    except:
+        titles = [None for _ in news_urls]
 
     result = []
     for n, c, t in zip(news_urls, companies, titles):
