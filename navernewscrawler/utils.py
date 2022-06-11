@@ -30,6 +30,8 @@ BASE_DIR = CWD / 'cache' / 'navernews'
 
 TIMEOUT = 600
 
+UPDATE_TOLERANCE_DAY = 1
+
 def timestamp2formatted(timestamp):
     return datetime.fromtimestamp(timestamp).strftime("%c")
 

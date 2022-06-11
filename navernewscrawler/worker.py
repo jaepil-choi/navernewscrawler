@@ -67,10 +67,13 @@ def generate_ii_newsdata(
         if filepath.exists() and continue_from_leftoff:
             with open(filepath, 'r') as j:
                 existing_data = json.load(j)
+            
+            modified_at = filepath.lstat().st_mtime
+            modified_at = datetime.fromtimestamp(modified_at)
+            tolerance_date = datetime.today() - timedelta(days=utils.UPDATE_TOLERANCE_DAY)
 
-            if not existing_data['data']:
-                # print(f'{sid}:{codename} data exists but empty. Start overwriting...\n')
-                pass # Proceed & overwrite if existing data is empty
+            if not existing_data['data'] and (modified_at < tolerance_date):
+                pass # Proceed & overwrite because existing data is empty and old
             else:
                 continue 
 
