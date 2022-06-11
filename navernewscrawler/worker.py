@@ -71,8 +71,9 @@ def generate_ii_newsdata(
             modified_at = filepath.lstat().st_mtime
             modified_at = datetime.fromtimestamp(modified_at)
             tolerance_date = datetime.today() - timedelta(days=utils.UPDATE_TOLERANCE_DAY)
+            is_recently_scraped = (modified_at < tolerance_date) # Temporary not using this condition because many companies already have empty data
 
-            if not existing_data['data'] and (modified_at < tolerance_date):
+            if not existing_data['data']:
                 pass # Proceed & overwrite because existing data is empty and old
             else:
                 continue 
