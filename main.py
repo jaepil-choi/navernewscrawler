@@ -5,6 +5,7 @@ from pathlib import Path
 import pickle
 
 import logging
+import traceback
 import time
 from datetime import timedelta, datetime
 # import jsonpickle
@@ -50,6 +51,7 @@ def wrap_worker(
             kosdaq_ii2codename,
             )
     except Exception as e:
+        print(traceback.format_exc())
         print(repr(e))
         print(f'** WARNING ** {sid} raised Exception. Skipping this company. Check the log.')
 
