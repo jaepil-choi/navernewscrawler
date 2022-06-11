@@ -57,7 +57,7 @@ def generate_ii_newsdata(
     utils.generate_dirs(sid, min(di_list), max(di_list))
 
     # iterate by month. 
-    print(f'Start downloading news: {sid}:{codename} from {di_list.min().date()} to {di_list.max().date()} ({len(di_list)} days)')
+    print(f'Start downloading news: {sid}:{codename} from {di_list.min().date()} to {di_list.max().date()} ({len(di_list)} days)\n')
     article_count = 0
     for year, month in yearmonth:
         json_result = {'data': []}
@@ -65,7 +65,14 @@ def generate_ii_newsdata(
         filepath = save_dir / f'{sid}_{year:04}{month:02}.json'
 
         if filepath.exists() and continue_from_leftoff:
-            continue
+            with open(filepath, 'r') as j:
+                existing_data = json.load(j)
+
+            if not existing_data['data']:
+                print(f'{sid}:{codename} data exists but empty. Start overwriting...\n')
+                pass # Proceed & overwrite if existing data is empty
+            else:
+                continue 
 
         monthly_di_list = di_groupby_ym[(year, month)]
 
