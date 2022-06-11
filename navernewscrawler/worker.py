@@ -69,7 +69,7 @@ def generate_ii_newsdata(
                 existing_data = json.load(j)
 
             if not existing_data['data']:
-                print(f'{sid}:{codename} data exists but empty. Start overwriting...\n')
+                # print(f'{sid}:{codename} data exists but empty. Start overwriting...\n')
                 pass # Proceed & overwrite if existing data is empty
             else:
                 continue 
