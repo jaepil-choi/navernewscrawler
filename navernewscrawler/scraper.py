@@ -81,12 +81,14 @@ def get_news_list(news_page_url) -> list:
         companies = b.find_all('div', {'class': 'info_group'})
         companies = [c.find('a').get_text() if c is not None else None for c in companies]
     except:
+        print(f'Error getting companies')
         companies = [None for _ in news_urls]
 
     try:
         titles = b.find_all('div', {'class': 'tit'})
         titles = [t.get_text() if c is not None else None for t in titles]
     except:
+        print(f'Error getting titles')
         titles = [None for _ in news_urls]
 
     result = []
