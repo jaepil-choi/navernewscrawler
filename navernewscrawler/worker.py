@@ -89,8 +89,13 @@ def generate_ii_newsdata(
                     naver_start_idx, 
                     utils.DateUtil.timestamp_2_intDate(di),
                     )
-                
-                news_link_list = scraper.get_news_list(url)
+                try:
+                    news_link_list = scraper.get_news_list(url)
+                except Exception as e:
+                    news_link_list = []
+
+                    print(f'Error(1) while getting news links - {sid}:{codename}')
+                    print(repr(e))
 
                 if not news_link_list:
                     break
@@ -106,7 +111,12 @@ def generate_ii_newsdata(
 
                 naver_news_prefix = 'news.naver.com'
                 if naver_news_prefix in article_url:
-                    article_data = scraper.article_crawling(article_url)
+                    try:
+                        article_data = scraper.article_crawling(article_url)
+                    except:
+                        print(f'Error(2) while getting news article data - {sid}:{codename}')
+                        print(repr(e))
+                        continue
 
                     headline = article_data['headline']
                     date_str = article_data['date'] # should be same as di but in naver date str format
