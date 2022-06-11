@@ -3,6 +3,7 @@ import multiprocessing as mp
 import argparse
 from pathlib import Path
 import pickle
+import json
 
 import logging
 import traceback
@@ -61,9 +62,15 @@ def wrap_worker(
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--processes', '-p', type=int, help='Number of processes for multiprocessing')
+    parser.add_argument('--test', '-t', action='store_true')
     args = parser.parse_args()
 
+    is_test = args.test
     num_processes = args.processes
+
+    if is_test:
+        with open('sid_list_test.json', 'r') as j:
+            sid_list = json.load(j)['data']
 
     start_time = time.time()
     print(f'{utils.timestamp2formatted(start_time)} : Job started')
