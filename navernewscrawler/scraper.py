@@ -79,13 +79,13 @@ def get_news_list(news_page_url) -> list:
 
     try:
         companies = b.find_all('div', {'class': 'info_group'})
-        companies = [c.find('a').get_text() for c in companies]
+        companies = [c.find('a').get_text() if c is not None else None for c in companies]
     except:
         companies = [None for _ in news_urls]
 
     try:
         titles = b.find_all('div', {'class': 'tit'})
-        titles = [t.get_text() for t in titles]
+        titles = [t.get_text() if c is not None else None for t in titles]
     except:
         titles = [None for _ in news_urls]
 
