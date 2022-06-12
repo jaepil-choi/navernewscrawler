@@ -85,7 +85,7 @@ def generate_ii_newsdata(
             # get article link data from news search page
             while 1: # loop until there's no more news link
                 if naver_start_idx > utils.NAVER_PAGE_LIMIT:
-                    print(f'{sid}:{codename} reached {naver_start_idx}. Stopping because limit is {utils.NAVER_PAGE_LIMIT}.')
+                    # print(f'{sid}:{codename} reached {naver_start_idx}. Stopping because limit is {utils.NAVER_PAGE_LIMIT}.')
                     break
 
                 url = scraper.naver_news_search_url(
