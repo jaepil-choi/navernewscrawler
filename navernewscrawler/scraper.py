@@ -82,6 +82,7 @@ def get_news_list(news_page_url) -> list:
         companies = [c.find('a').get_text() if c is not None else None for c in companies]
     except:
         print(f'Error getting companies')
+        print(b.get_text())
         companies = [None for _ in news_urls]
 
     try:
@@ -89,6 +90,7 @@ def get_news_list(news_page_url) -> list:
         titles = [t.get_text() if t is not None else None for t in titles]
     except:
         print(f'Error getting titles')
+        print(b.get_text())
         titles = [None for _ in news_urls]
 
     result = []
