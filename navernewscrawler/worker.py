@@ -44,8 +44,6 @@ def generate_ii_newsdata(
     ## scrape data
     di_list = ii2dates[sid]
     codename = ii2codename[sid]
-
-    naver_start_idx = 1
     
     yearmonth =  [(d.year, d.month) for d in di_list]
     di_groupby_ym = di_list.groupby(yearmonth)
@@ -82,7 +80,8 @@ def generate_ii_newsdata(
 
         for di in monthly_di_list:
             news_link_data = []
-
+            naver_start_idx = 1
+            
             # get article link data from news search page
             while 1: # loop until there's no more news link
                 url = scraper.naver_news_search_url(
