@@ -160,7 +160,8 @@ def generate_ii_newsdata(
                 'year': year,
                 'month': month,
                 'url': url,
-                'news_link_data': news_link_data
+                'news_link_list': news_link_list,
+                'news_link_data': news_link_data,
             }
 
             with open('log_json.json', 'w') as j:
