@@ -58,8 +58,8 @@ def generate_ii_newsdata(
 
     # iterate by month. 
     print(f'Start downloading news: {sid}:{codename} from {di_list.min().date()} to {di_list.max().date()} ({len(di_list)} days)\n')
-    article_count = 0
     for year, month in yearmonth:
+        article_count = 0
         json_result = {'data': []}
         save_dir = utils.BASE_DIR / sid / f'{year:04}' / f'{month:02}'
         filepath = save_dir / f'{sid}_{year:04}{month:02}.json'
@@ -152,6 +152,16 @@ def generate_ii_newsdata(
                 }
 
                 json_result['data'].append(result)
+        
+        if not json_result['data']:
+            print(f'**WARNING {sid}:{codename} - Empty data for {year}/{month}. Check the log.')
+            log_json = {
+                'sid': sid,
+                'year': year,
+                'month': month,
+                'url': url,
+                'news_link_data': news_link_data
+            }
 
         article_count += len(json_result['data'])
         with open(filepath, 'w', encoding='utf-8') as j:
