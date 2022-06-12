@@ -20,8 +20,8 @@ def generate_ii_newsdata(
     ## set market
     market = None
     if (sid in kospi_ii2dates) and (sid in kosdaq_ii2dates):
-        kospi_max_date = kospi_ii2dates[sid]
-        kosdaq_max_date = kosdaq_ii2dates[sid]
+        kospi_max_date = kospi_ii2dates[sid].max()
+        kosdaq_max_date = kosdaq_ii2dates[sid].min()
 
         if kospi_max_date >= kosdaq_max_date:
             market = 'kospi'
