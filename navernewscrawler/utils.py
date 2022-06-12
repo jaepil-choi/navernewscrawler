@@ -32,6 +32,8 @@ TIMEOUT = 600
 
 UPDATE_TOLERANCE_DAY = 1
 
+NAVER_PAGE_LIMIT = 10
+
 def timestamp2formatted(timestamp):
     return datetime.fromtimestamp(timestamp).strftime("%c")
 
