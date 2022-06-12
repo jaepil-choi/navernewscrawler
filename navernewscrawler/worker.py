@@ -163,6 +163,9 @@ def generate_ii_newsdata(
                 'news_link_data': news_link_data
             }
 
+            with open('log_json.json', 'w') as j:
+                json.dump(log_json, j)
+
         article_count += len(json_result['data'])
         with open(filepath, 'w', encoding='utf-8') as j:
             json.dump(json_result, j)
