@@ -86,17 +86,17 @@ def get_news_list(news_page_url) -> list:
 
     try:
         titles = b.find_all('div', {'class': 'tit'})
-        titles = [t.get_text() if c is not None else None for t in titles]
+        titles = [t.get_text() if t is not None else None for t in titles]
     except:
         print(f'Error getting titles')
         titles = [None for _ in news_urls]
 
     result = []
-    for n, c, t in zip(news_urls, companies, titles):
+    for news, company, title in zip(news_urls, companies, titles):
         result.append({
-            'news_url': n,
-            'company': c,
-            'title': t,
+            'news_url': news,
+            'company': company,
+            'title': title,
             })
     
     return result
