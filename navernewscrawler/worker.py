@@ -157,11 +157,10 @@ def generate_ii_newsdata(
         with open(filepath, 'w', encoding='utf-8') as j:
             json.dump(json_result, j)
             # print(f'Dump succedded at {filepath}, length: {json_result["data"]}')
-    
+        print(f'{sid}:{codename}: {year}/{month} -> {article_count} articles')
     end_time = time.time()
 
     print(f'[{utils.timestamp2formatted(end_time)}] {sid}:{codename} Finished. \
-/ {article_count} articles \
 / Elapsed: {timedelta(seconds=(end_time - start_time))}') 
 
     return sid
