@@ -58,7 +58,7 @@ def wrap_worker(
             )
 
         COUNT += 1
-        print(f'Curent count: {COUNT}/{TOTAL}')
+        print(f'\n ### Curent count: {COUNT}/{TOTAL} ### \n')
 
         return res
 
