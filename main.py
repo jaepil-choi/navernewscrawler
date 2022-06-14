@@ -14,8 +14,6 @@ from datetime import timedelta, datetime
 ## Import custom libs
 from navernewscrawler import worker, utils
 
-COUNT = 0
-
 def check_pickle(filename):
     cwd = Path('.').resolve()
 
@@ -37,6 +35,9 @@ with open('kospi_ii2codename_combined.pickle', 'rb') as f:
     kospi_ii2codename = pickle.load(f)
 with open('kosdaq_ii2codename_combined.pickle', 'rb') as f:
     kosdaq_ii2codename = pickle.load(f)
+
+TOTAL = len(sid_list)
+COUNT = 0
 
 def wrap_worker(
     sid, 
@@ -82,8 +83,6 @@ if __name__ == '__main__':
     if is_test:
         with open('sid_list_test.json', 'r') as j:
             sid_list = json.load(j)['data']
-    
-    TOTAL = len(sid_list)
 
     start_time = time.time()
     print(f'{utils.timestamp2formatted(start_time)} : Job started')
