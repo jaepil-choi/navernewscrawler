@@ -71,7 +71,7 @@ def generate_ii_newsdata(
             tolerance_date = datetime.today() - timedelta(days=utils.UPDATE_TOLERANCE_DAY)
             is_recently_scraped = (modified_at < tolerance_date) # Temporary not using this condition because many companies already have empty data
 
-            if not existing_data['data']:
+            if not existing_data['data'] and is_recently_scraped:
                 pass # Proceed & overwrite because existing data is empty and old
             else:
                 continue 
