@@ -14,6 +14,8 @@ from datetime import timedelta, datetime
 ## Import custom libs
 from navernewscrawler import worker, utils
 
+COUNT = 0
+
 def check_pickle(filename):
     cwd = Path('.').resolve()
 
@@ -43,14 +45,23 @@ def wrap_worker(
     kospi_ii2codename=kospi_ii2codename,
     kosdaq_ii2codename=kosdaq_ii2codename,
     ):
+
+    global COUNT
+
     try:
-        return worker.generate_ii_newsdata(
+        res = worker.generate_ii_newsdata(
             sid,
             kospi_ii2dates,
             kosdaq_ii2dates,
             kospi_ii2codename,
             kosdaq_ii2codename,
             )
+
+        COUNT += 1
+        print(f'Curent count: {COUNT}/{TOTAL}')
+
+        return res
+
     except Exception as e:
         print(traceback.format_exc())
         print(repr(e))
@@ -71,6 +82,8 @@ if __name__ == '__main__':
     if is_test:
         with open('sid_list_test.json', 'r') as j:
             sid_list = json.load(j)['data']
+    
+    TOTAL = len(sid_list)
 
     start_time = time.time()
     print(f'{utils.timestamp2formatted(start_time)} : Job started')
