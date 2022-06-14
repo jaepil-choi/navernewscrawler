@@ -11,6 +11,8 @@ import time
 from datetime import timedelta, datetime
 # import jsonpickle
 
+from tqdm import tqdm
+
 ## Import custom libs
 from navernewscrawler import worker, utils
 
@@ -36,9 +38,6 @@ with open('kospi_ii2codename_combined.pickle', 'rb') as f:
 with open('kosdaq_ii2codename_combined.pickle', 'rb') as f:
     kosdaq_ii2codename = pickle.load(f)
 
-TOTAL = len(sid_list)
-COUNT = 0
-
 def wrap_worker(
     sid, 
     kospi_ii2dates=kospi_ii2dates,
@@ -46,8 +45,6 @@ def wrap_worker(
     kospi_ii2codename=kospi_ii2codename,
     kosdaq_ii2codename=kosdaq_ii2codename,
     ):
-
-    global COUNT
 
     try:
         res = worker.generate_ii_newsdata(
@@ -57,9 +54,6 @@ def wrap_worker(
             kospi_ii2codename,
             kosdaq_ii2codename,
             )
-
-        COUNT += 1
-        print(f'\n ### Curent count: {COUNT}/{TOTAL} ### \n')
 
         return res
 
@@ -89,7 +83,7 @@ if __name__ == '__main__':
     if num_processes:
         print(f'Start multiprocessing with {num_processes} processes')
         with mp.Pool(processes=num_processes) as p:
-            mp_result = p.map(wrap_worker, sid_list)
+            mp_result = tqdm(p.imap(wrap_worker, sid_list), len(sid_list))
     else:
         print('Start without multiprocessing ')
         result = []
