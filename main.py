@@ -83,7 +83,8 @@ if __name__ == '__main__':
     if num_processes:
         print(f'Start multiprocessing with {num_processes} processes')
         with mp.Pool(processes=num_processes) as p:
-            mp_result = tqdm(p.imap(wrap_worker, sid_list), total=len(sid_list))
+            # mp_result = tqdm(p.imap(wrap_worker, sid_list), total=len(sid_list))
+            mp_result = p.map(wrap_worker, sid_list)
     else:
         print('Start without multiprocessing ')
         result = []
